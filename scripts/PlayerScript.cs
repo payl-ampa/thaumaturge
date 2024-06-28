@@ -5,11 +5,35 @@ public partial class PlayerScript : CharacterBody3D
 {
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
+	[Export]
+	public float HorizontalMouseSensitivity = 0.1f;
+	[Export]
+	public float VerticalMouseSensitivity = 0.1f;
+
+	private Node3D _camera_mount;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
-	public override void _PhysicsProcess(double delta)
+    public override void _Ready()
+    {
+		Input.MouseMode = Input.MouseModeEnum.Captured;
+		_camera_mount = GetNode<Node3D>("CameraMount");
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+		if (@event is InputEventMouseMotion mouseMotion)
+		{
+			RotateY(-Mathf.DegToRad(mouseMotion.Relative.X) * HorizontalMouseSensitivity);
+			_camera_mount.RotateX(-Mathf.DegToRad(mouseMotion.Relative.Y) * VerticalMouseSensitivity);
+		}
+
+		if (@event is InputEventKey eventKey)
+			if (eventKey.Pressed && eventKey.Keycode == Key.Escape)
+				GetTree().Quit();
+    }
+    public override void _PhysicsProcess(double delta)
 	{
 		Vector3 velocity = Velocity;
 
