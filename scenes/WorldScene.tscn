@@ -72,4 +72,4 @@ use_collision = true
 size = Vector3(2, 2, 2)
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("5_tsome")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3415, -4.76837e-07, -0.706314)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58719, 0.13472, -0.00862616)
